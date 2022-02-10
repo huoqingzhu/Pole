@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "paths": {
       "packages/*": ["./packages/*"]
-    }
+    },
+    "types": ["vite/client"]
+
   },
   "include": [
     "*.ts",

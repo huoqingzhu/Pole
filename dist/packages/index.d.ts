@@ -6,5 +6,4 @@
 import { Plugin } from 'vue';
 declare const MYKitPlugin: Plugin;
 export default MYKitPlugin;
-export * from './Button';
-export * from './Foo';
+export * from './Layout';

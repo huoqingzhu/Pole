@@ -8,17 +8,7 @@
 
  import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router'
 
- const routes = [{
-    title: '布局',
-    name: 'Layout',
-    path: '/components/Layout',
-    component: () => import('packages/Layout/docs/README.md'),
-  },{
-    title: '密码框',
-    name: 'PasswordBox',
-    path: '/components/PasswordBox',
-    component: () => import('packages/PasswordBox/docs/README.md'),
-  }];
+ const routes = [{{ routes }}];
  
  const routerConfig = {
    history: createWebHashHistory(),

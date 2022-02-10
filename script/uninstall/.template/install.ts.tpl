@@ -7,14 +7,14 @@
  */
 import { App, Plugin } from 'vue';
 
-import { LayoutPlugin } from './Layout';
+{{ importPlugins }}
 
 const MYKitPlugin: Plugin = {
   install(app: App) {
-    LayoutPlugin.install?.(app);
+    {{ installPlugins }}
   },
 };
 
 export default MYKitPlugin;
 
-export * from './Layout'
+{{ exportPlugins }}

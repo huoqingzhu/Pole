@@ -1,6 +1,5 @@
 ![IMG_5885](https://user-images.githubusercontent.com/12172868/145699258-517293e0-c5e1-474c-8ba6-7695b07cfac3.jpg)
 
-
 说到 Vue 的组件库，大家肯定早已耳熟能详，随随便便就能列举出一大堆。那为什么还需要自己去搭建呢？结合自身的经验，在业务中往往需要高度定制化的组件，无论是 UI 和交互，可能都会跟市面上现有的组件库有着较大的出入。这个时候如果是基于现有的组件库进行修改的话，其理解成本和修改成本也不小，甚至比自己搭建一套还要高。因此搭建一套自己的组件库还是一个相当常见的需求。
 
 对于一个组件库来说，除了”组件“本身以外，另个一个非常重要的东西就是文档展示。参考市面上优秀的开源组件库，无一不是既有高质量的组件，更有一套非常规范且详细的文档。文档除了对组件的功能进行说明以外，同时也具备了组件交互预览的能力，让用户的学习成本尽可能地降低。
@@ -15,7 +14,6 @@
 
 ![image](https://user-images.githubusercontent.com/12172868/145698677-3c34a45e-12b3-4686-8280-26b5ab46208c.png)
 
-
 [在线体验
 ](https://jrainlau.github.io/MY-Kit/index.html#/components/Button)
 
@@ -24,8 +22,8 @@
 
 [演示视频](https://user-images.githubusercontent.com/12172868/145698280-730751be-a3f8-4989-abc2-dcf467362fb1.mp4)
 
-
 ## 一、开发框架初始化
+
 这一套开发框架我们把它命名为 `MY-Kit`。在技术选型上使用的是 Vite + Vue3 + Typescript。
 
 在空白目录执行下列命令：
@@ -94,6 +92,7 @@ defineEmits(['click']);
 `packages/Button/index.ts`
 
 为了让组件库既允许全局调用：
+
 ```js
 import { createApp } from 'vue'
 import App from './app.vue'
@@ -171,6 +170,7 @@ export * from './Button';
 完成了上述组件库目录的初始化以后，此时我们的 `MY-Kit` 是已经可以被业务侧直接使用了。
 
 回到根目录下找到 `src/main.ts` 文件，我们把整个 `MY-Kit` 引入：
+
 ```js
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -180,6 +180,7 @@ import MyKit from '../packages';
 createApp(App).use(MyKit).mount('#app')
 
 ```
+
 改写 `src/App.vue`，引入 `<my-button></my-button>` 试一下：
 
 ```html
@@ -187,6 +188,7 @@ createApp(App).use(MyKit).mount('#app')
   <my-button>我是自定义按钮</my-button>
 </template>
 ```
+
 运行 `yarn dev` 开启 Vite 的服务器以后，就可以直接在浏览器上看到效果了：
 
 ![image](https://user-images.githubusercontent.com/12172868/145666383-45294533-57f7-4226-9541-24aad4e6a977.png)
@@ -195,12 +197,12 @@ createApp(App).use(MyKit).mount('#app')
 
 ![Kapture 2021-12-12 at 11 20 50](https://user-images.githubusercontent.com/12172868/145698937-f9b0df8e-1d2f-4ac0-af1f-14229ffea73c.gif)
 
-
 一个组件库肯定不止有 Button 一种组件，每个组件都应该有它独立的文档。这个文档不仅有对组件各项功能的描述，更应该具有组件预览、组件代码查看等功能，我们可以把这种文档称之为“可交互式文档”。同时为了良好的组件开发体验，我们希望这个文档是实时的，这边修改代码，那边就可以在文档里实时地看到最新的效果。接下来我们就来实现这么一个功能。
 
 组件的文档一般是用 Markdown 来写，在这里也不例外。我们希望一个 Markdown 一个页面，因此需要使用 `vue-router@next` 来实现路由控制。
 
 在根目录的 `/src` 底下新建 `router.ts`，写入如下代码：
+
 ```js
 import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router'
 
@@ -227,6 +229,7 @@ export default router;
 ```
 
 可以看到这是一个典型的 `vue-router@next` 配置，细心的读者会发现这里为 path 为 `/components/Button` 的路由引入了一个 Markdown 文件，这个在默认的 Vite 配置里是无效的，我们需要引入 `vite-plugin-md` 插件来解析 Markdown 文件并把它变成 Vue 文件。回到根目录下找到 `vite.config.ts`，添加该插件：
+
 ```js
 import Markdown from 'vite-plugin-md'
 
@@ -289,6 +292,7 @@ body {
 }
 </style>
 ```
+
 最后我们往 `/packages/Button/docs/README.md` 里面随便写点东西：
 
 ```markdown
@@ -344,10 +348,10 @@ import demo from './demo.vue'
 与此同时，如果我们对 `<my-button />` 的本体 Vue 文件进行任何的修改，都能够实时在文档中体现出来。
 
 ## 三、代码预览功能
+
 可交互式文档已经基本弄好了，但还有一个问题，就是不能直观地预览代码。你可能会说，要预览代码很简单啊，直接在 Markdown 里面把代码贴进去不就好了？话虽如此并没有错，但是秉承着“偷懒才是第一生产力”，估计没有人喜欢把自己写过的代码再抄一遍，肯定是希望能够有个办法既能够在文档里把所写的 demo 展示出来，又能直接看到它的代码，比如说这样：
 
 ![Kapture 2021-12-12 at 11 26 58](https://user-images.githubusercontent.com/12172868/145699113-9702528d-38ab-495a-9da2-78fd157dd7be.gif)
-
 
 只要把组件放进一个 `<Preview />` 标签内就能直接展示组件的代码，同时还具有代码高亮的功能，这才是可交互式文档真正具备的样子！接下来我们就来研究一下应该如何实现这个功能。
 
@@ -414,7 +418,6 @@ if (isDev) {
 
 ![image](https://user-images.githubusercontent.com/12172868/145676612-0f83b2f1-40b2-4574-a8b7-7762da808130.png)
 
-
 但是这样的源码展示非常丑，只有干巴巴的字符，我们有必要给它们加个高亮。高亮的方案我选择了 PrismJS，它非常小巧又灵活，只需要引入一个相关的 CSS 主题文件，然后执行 `Prism.highlightAll()` 即可。本例所使用的 CSS 主题文件[已经放置在仓库](https://github.com/jrainlau/MY-Kit/blob/main/src/assets/prism.css)，可以自行取用。
 
 回到项目，执行 `yarn add prismjs -D` 安装 PrismJS，然后在 `<Preview />` 组件中引入：
@@ -444,6 +447,7 @@ export default {
 这样调整了以后，PrismJS 就会自动高亮源码了。
 
 ## 四、命令式新建组件
+
 到目前为止，我们的整个“实时可交互式文档”已经搭建完了，是不是意味着可以交付给其他同学进行真正的组件开发了呢？假设你是另一个开发同学，我跟你说：“你只要在这里，这里和这里新建这些文件，然后在这里和这里修改一下配置就可以新建一个组件了！”你会不会很想打人？作为组件开发者的你，并不想关心我的配置是怎样的，框架是怎么跑起来的，只希望能够在最短时间内就能够初始化一个新的组件然后着手开发。为了满足这个想法，我们有必要把之前处理的步骤变得更加自动化一些，学习成本更低一些。
 
 国际惯例，先看完成效果再看实现方式：
@@ -493,6 +497,7 @@ module.exports = async () => {
   return meta
 }
 ```
+
 通过 `node` 运行该文件时，会在终端内依次提出三个组件信息相关的问题，并把答案 `compName`（组件英文名），`compZhName` （组件中文名）和 `compDesc`（组件描述）保存在 `meta` 对象中并导出。
 
 收集到了组件相关信息后，就要通过 `handlebars` 替换模板中的内容，生成或修改文件了。
@@ -553,6 +558,7 @@ export { Button };
 ```
 
 模板替换的核心代码如下：
+
 ```js
 const fs = require('fs-extra')
 const handlebars = require('handlebars')
@@ -582,6 +588,7 @@ const installTsTplReplacer = (listFileContent) => {
   })
 }
 ```
+
 上述代码中的 `listFileContent` 即为 `/packages/list.json` 中的内容，这个 JSON 文件也是需要根据新组件而动态更新。
 
 在完成了模板替换的相关逻辑后，就可以把它们都收归到一个可执行文件中了：
@@ -611,6 +618,7 @@ run()
 接下来只要执行 `yarn gen` 就可以进入交互式终端，回答问题自动完成新建组件文件、修改配置的功能，并能够在可交互式文档中实时预览效果。
 
 ## 五、分开文档和库的构建逻辑
+
 在默认的 Vite 配置中，执行 `yarn build` 所构建出来的产物是“可交互式文档网站”，并非“组件库”本身。为了构建一个 `my-kit` 组件库并发布到 npm，我们需要将构建的逻辑分开。
 
 在根目录下添加一个 `/build` 目录，依次写入 `base.js`，`lib.js` 和 `doc.js`，分别为基础配置、库配置和文档配置。
@@ -620,6 +628,7 @@ run()
 `base.js`
 
 基础配置，需要确定路径别名、配置 Vue 插件和 Markdown 插件用于对应文件的解析。
+
 ```js
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
@@ -646,6 +655,7 @@ export default defineConfig({
 `lib.js`
 
 库构建，用于构建位于 `/packages` 目录的组件库，同时需要 `vite-plugin-dts` 来帮助把一些 TS 声明文件给打包出来。
+
 ```js
 import baseConfig from './base.config';
 import { defineConfig } from 'vite';
@@ -684,6 +694,7 @@ export default defineConfig({
 `doc.js`
 
 交互式文档构建配置，跟 base 是几乎一样的，只需要修改输出目录为 `docs` 即可。
+
 ```js
 import baseConfig from './vite.base.config';
 import { defineConfig } from 'vite';
@@ -696,7 +707,9 @@ export default defineConfig({
 });
 
 ```
+
 还记得前文有提到的构建文档时需要把 `/packages` 目录也一并复制到输出目录吗？亲测了好几个 Vite 的复制插件都不好使，干脆自己写一个：
+
 ```js
 const child_process = require('child_process');
 
@@ -716,6 +729,7 @@ copyDir('./packages', './docs');
 ```
 
 `build:lib` 的产物：
+
 ```bash
 dist
 ├── my-kit.es.js
@@ -734,6 +748,7 @@ dist
 ```
 
 `build:doc` 的产物：
+
 ```bash
 docs
 ├── assets
@@ -749,4 +764,5 @@ docs
 大功告成！
 
 ## 六、尾声
+
 至此我们的组件开发框架已经基本完成了，它具备了相对完整的代码开发、实时交互式文档、命令式新建组件等能力，在它上面开发组件已经拥有了超级丝滑的体验。当然它距离完美还有很长的距离，比如说单元测试、E2E测试等也还没集成进去，组件库的版本管理和 CHANGELOG 还需要接入，这些不完美的部分都很值得补充进去。本文纯当抛砖引玉，也期待更多的交流~

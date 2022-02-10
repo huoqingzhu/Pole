@@ -7,17 +7,17 @@
  */
 import { App, Plugin } from 'vue';
 
-import { ButtonPlugin } from './Button';
-import { FooPlugin } from './Foo';
+import { LayoutPlugin } from './Layout';
+import { PasswordBoxPlugin } from './PasswordBox';
 
 const MYKitPlugin: Plugin = {
   install(app: App) {
-    ButtonPlugin.install?.(app);
-    FooPlugin.install?.(app);
+    LayoutPlugin.install?.(app);
+    PasswordBoxPlugin.install?.(app);
   },
 };
 
 export default MYKitPlugin;
 
-export * from './Button'
-export * from './Foo'
+export * from './Layout'
+export * from './PasswordBox'
