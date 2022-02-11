@@ -6,11 +6,11 @@
     "build:doc": "vue-tsc --noEmit && vite build --config ./build/doc.config.ts && node script/copyDir.js",
     "build:lib": "vue-tsc --noEmit && vite build --config ./build/lib.config.ts",
     "gen": "node ./script/genNewComp/index.js",
-    "uninstall":"node ./script/uninstall/index.js"
+    "uninstall": "node ./script/uninstall/index.js"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^0.2.4",
-    "element-plus": "^1.3.0-beta.3",
+    "element-plus": "^2.0.1",
     "prismjs": "^1.25.0",
     "vue": "^3.2.23"
   },

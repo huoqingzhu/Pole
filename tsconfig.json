@@ -15,7 +15,7 @@
     "paths": {
       "packages/*": ["./packages/*"]
     },
-    "types": ["vite/client"]
+    "types": ["vite/client","element-plus/global"]
 
   },
   "include": [

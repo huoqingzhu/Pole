@@ -1,0 +1,74 @@
+<template>
+  <div class="my-table-page">
+    <my-table :columns="columns" :getData="getData" :edit="true">
+      <template #resType="{row:{resType}}">
+          {{processKey[resType]}}
+      </template>
+      <template #operation="{row}">
+          <el-button>编辑</el-button>
+      </template>
+    </my-table>
+  </div>
+</template>
+
+<script lang="ts" setup>
+const columns=[
+          {
+            prop: "resName",
+            label: "项目名称",
+          },
+          {
+            prop: "build",
+            label: "建设单位",
+          },
+          {
+            prop: "declare",
+            label: "申报单位",
+          },
+          {
+            prop: "time",
+            label: "申报时间",
+          },
+          {
+            prop: "resType",
+            label: "流程状态",
+            slot: "resType",
+          },
+      ];
+const getData=()=>{
+  return new Promise((resolve) => {
+          const list:any[] = [];
+          for (let i = 1; i < 9; i++) {
+            const obj = {
+              resName: `项目${i*10}`,
+              build: "住建局-城建处",
+              declare: "住建局-信息中心",
+              time: "2021-08-10",
+              resType: i,
+            };
+            list.push(obj);
+          }
+          setTimeout(() => resolve({ list, total: list.length }), 1000);
+    });
+}
+const processKey=Object.freeze({
+        1: "待修改",
+        2: "待材料审核",
+        3: "待评审",
+        4: "待发起评审会",
+        5: "待评分",
+        6: "待确认评分",
+        7: "待方案备案",
+        8: "待传评审结论",
+        9: "不予立项",
+        10: "待预算备案",
+        11: "待采购备案",
+        12: "立项采购完成",
+})
+</script>
+
+<style scoped>
+.my-table-page {
+  
+}
+</style>
