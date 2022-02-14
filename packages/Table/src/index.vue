@@ -89,7 +89,7 @@ const props= withDefaults(defineProps<{
   getData() {
       return new Promise((resolve) => {
           const list:any[] = [];
-          for (let i = 0; i < 9; i++) {
+          for (let i = 0; i < 90; i++) {
             const obj = {
               resName: `项目${i}`,
               build: "住建局-城建处",
