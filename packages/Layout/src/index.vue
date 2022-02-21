@@ -1,3 +1,4 @@
+
 <template>
   <div class="my-layout" ref="layout">
     <div
@@ -31,7 +32,7 @@ import {appType,device,propsType,themeColor} from "./type"
 import Navbar from "./component/Navbar/index.vue"
 import {Fold} from "@element-plus/icons-vue"
 import { reactive,provide, onMounted,onUnmounted,computed,ref} from "vue"
-//@ts-ignore
+
 const props= withDefaults(defineProps<{
   themeColor:themeColor,
   list:any[],

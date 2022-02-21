@@ -139,7 +139,7 @@ const handleSizeChange=(val:number)=> {
       state.searchParameters.pageNo = 1;
       getList(props.parameter);
     }
-const  handleCurrentChange=(val:number)=> {
+const handleCurrentChange=(val:number)=> {
       state.searchParameters.pageNo = val;
       getList(props.parameter);
     }
@@ -154,7 +154,7 @@ onMounted(()=>{
   width: 100%;
 }
 .my-pagination {
-   display: flex;
+  display: flex;
   justify-content: flex-end;
 }
 </style>
