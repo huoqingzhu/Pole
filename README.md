@@ -10,7 +10,6 @@ npm run add
 ```
 
 新增的组件在packages目录下
-
 结构如下
 
 ```bash
