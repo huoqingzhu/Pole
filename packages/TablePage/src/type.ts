@@ -3,10 +3,9 @@ export interface columnsItem{
   label:string,//列名
   sortable?:boolean,//
   width?:string,
-  slot?: string,
+  slot?:string,
 }
 export interface propsType{
-  mode?:string//data||request
   selection?:boolean,//序号
   columns?:columnsItem[],
   getData?:Function,
@@ -44,20 +43,19 @@ export const columns =[
     slot: "resType",
   },
 ];
-export const getData=(parameter:{pageSize:number,pageNo:number})=>{
-    return new Promise((resolve) => {
-            console.log(parameter)
-            const list:any[] = [];
-            for (let i = 1; i < parameter.pageSize; i++) {
-              const obj = {
-                resName: `项目${i*parameter.pageNo}`,
-                build: "住建局-城建处",
-                declare: "住建局-信息中心",
-                time: "2021-08-10",
-                resType: i,
-              };
-              list.push(obj);
-            }
-            setTimeout(() => resolve({ list, total: list.length*10 }), 1000);
-      });
-  }
+export const getData=()=> {
+  return new Promise((resolve) => {
+      const list:any[] = [];
+      for (let i = 0; i < 9; i++) {
+        const obj = {
+          resName: `项目${i}`,
+          build: "住建局-城建处",
+          declare: "住建局-信息中心",
+          time: "2021-08-10",
+          resType: i,
+        };
+        list.push(obj);
+      }
+      setTimeout(() => resolve({ list, total: list.length }), 1000);
+    });
+}

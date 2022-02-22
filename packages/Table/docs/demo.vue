@@ -11,6 +11,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+
+
 const columns=[
           {
             prop: "resName",
@@ -34,12 +36,13 @@ const columns=[
             slot: "resType",
           },
       ];
-const getData=()=>{
+const getData=(parameter:{pageSize:number,pageNo:number})=>{
   return new Promise((resolve) => {
+          console.log(parameter)
           const list:any[] = [];
-          for (let i = 1; i < 9; i++) {
+          for (let i = 1; i < parameter.pageSize; i++) {
             const obj = {
-              resName: `项目${i*10}`,
+              resName: `项目${i*parameter.pageNo}`,
               build: "住建局-城建处",
               declare: "住建局-信息中心",
               time: "2021-08-10",
@@ -47,7 +50,7 @@ const getData=()=>{
             };
             list.push(obj);
           }
-          setTimeout(() => resolve({ list, total: list.length }), 1000);
+          setTimeout(() => resolve({ list, total: list.length*10 }), 1000);
     });
 }
 const processKey=Object.freeze({

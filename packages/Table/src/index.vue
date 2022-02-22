@@ -2,10 +2,10 @@
     <div class="my-table">
       <el-table
         ref="multipleTable"
-        v-loading="state.loading"
+        v-loading="loading"
         :stripe="stripe"
         :border="border"
-        :data="state.tableData"
+        :data="tableData"
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
@@ -39,9 +39,9 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :page-sizes="[10, 20, 30, 40]"
-            :page-size="state.searchParameters.pageSize"
+            :page-size="searchParameters.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="state.total"
+            :total="total"
             v-if="pagination"
           >
       </el-pagination>
@@ -49,69 +49,35 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive,onMounted} from "vue"
-import {columnsItem,stateType} from "./type"
+import {reactive,onMounted,toRefs} from "vue"
+import {columnsItem,stateType,columns,getData} from "./type"
 const props= withDefaults(defineProps<{
       selection?:boolean,//是否展示序号
       columns?:columnsItem[],//表头配置
       getData?:Function,//通过函数获取数据
+      tableData?:any[],
       parameter?:object,//请求额外参数
       pagination?:boolean,//是否展示分页
       edit?:boolean//是否展示编辑
       stripe?:boolean//是否为斑马纹 table	
-      border?:boolean//是否带有纵向边框	
+      border?:boolean//是否带有纵向边框
+      resKey?:string//通过接口请求获取数据的key
 }>(),{
   columns(){
-    return [
-          {
-            prop: "resName",
-            label: "项目名称",
-          },
-          {
-            prop: "build",
-            label: "建设单位",
-          },
-          {
-            prop: "declare",
-            label: "申报单位",
-          },
-          {
-            prop: "time",
-            label: "申报时间",
-          },
-          {
-            prop: "resType",
-            label: "流程状态",
-            slot: "resType",
-          },
-        ];
+    return columns
   },
-  getData() {
-      return new Promise((resolve) => {
-          const list:any[] = [];
-          for (let i = 0; i < 90; i++) {
-            const obj = {
-              resName: `项目${i}`,
-              build: "住建局-城建处",
-              declare: "住建局-信息中心",
-              time: "2021-08-10",
-              resType: i,
-            };
-            list.push(obj);
-          }
-          setTimeout(() => resolve({ list, total: list.length }), 1000);
-        });
-    },
+  getData,
   pagination:true,
   selection:true,
   edit:false,
   stripe:false,
   border:false,
+  resKey:'list',
   parameter(){
       return {}
     }
 })
-
+const emit = defineEmits(['change','size-change','current-change'])
 const state:stateType=reactive({
     loading:false,
     tableData:[],
@@ -127,26 +93,36 @@ const handleSelectionChange=(value:any[])=>{
 }
 const getList=(parameter = props.parameter)=> {
       state.loading = true;
-      let _opt = { ...state.searchParameters, ...parameter };
-      props.getData(_opt).then((res:any) => {
-        state.tableData = res.list;
-        state.total = res.total;
-        state.loading = false;
-      });
+          let _opt = { ...state.searchParameters, ...parameter };
+          props.getData(_opt).then((res:any) => {
+            state.tableData = res[props.resKey];
+            state.total = res.total;
+            state.loading = false;
+          });
     }
 const handleSizeChange=(val:number)=> {
-      state.searchParameters.pageSize = val;
-      state.searchParameters.pageNo = 1;
-      getList(props.parameter);
+      if(props.tableData){
+        emit('size-change',val)
+      }else{
+        state.searchParameters.pageSize = val;
+        state.searchParameters.pageNo = 1;
+        getList(props.parameter);
+      }
     }
 const handleCurrentChange=(val:number)=> {
-      state.searchParameters.pageNo = val;
-      getList(props.parameter);
+    if(props.tableData){
+        emit('current-change',val)
+      }else{
+        state.searchParameters.pageNo = val;
+        getList(props.parameter);
+      }
     }
 
 onMounted(()=>{
-    getList(props.parameter);
+    props.tableData?state.tableData = props.tableData:getList(props.parameter)
 })
+//导出属性到页面中使用
+const { loading, tableData,searchParameters,total} = toRefs(state)
 </script>
 
 <style scoped lang="scss">

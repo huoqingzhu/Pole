@@ -1,74 +1,95 @@
 <template>
   <div class="my-table-page">
-    <my-table :columns="columns" :getData="getData" :edit="true">
-      <template #resType="{row:{resType}}">
-          {{processKey[resType]}}
-      </template>
-      <template #operation="{row}">
-          <el-button>编辑</el-button>
-      </template>
+      <div class="box-card" style="height: 124px;margin-bottom: 10px;">
+        <!-- 搜索的上面空间 -->
+        <slot name="header"></slot>
+        <div class="seach">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              white-space: nowrap;
+              width: calc(75% - 7px);
+            "
+          >
+            <!-- 与搜索平行的空间 -->
+            <slot name="seach"> </slot>
+          </div>
+          <div style="display: flex">
+            <el-button
+              type="primary"
+              class="button"
+              @click="search"
+              >搜索</el-button
+            >
+            <el-button class="button"  @click="resize"
+              >重置</el-button
+            >
+          </div>
+        </div>
+      </div>
+    <my-table 
+      :selection="props.selection"
+      :columns="props.columns"
+      :getData="props.getData"
+      :parameter="props.parameter"
+      :pagination="props.pagination"
+      :edit="props.edit"
+    >
+  
     </my-table>
   </div>
 </template>
 
 <script lang="ts" setup>
-const columns=[
-          {
-            prop: "resName",
-            label: "项目名称",
-          },
-          {
-            prop: "build",
-            label: "建设单位",
-          },
-          {
-            prop: "declare",
-            label: "申报单位",
-          },
-          {
-            prop: "time",
-            label: "申报时间",
-          },
-          {
-            prop: "resType",
-            label: "流程状态",
-            slot: "resType",
-          },
-      ];
-const getData=()=>{
-  return new Promise((resolve) => {
-          const list:any[] = [];
-          for (let i = 1; i < 9; i++) {
-            const obj = {
-              resName: `项目${i*10}`,
-              build: "住建局-城建处",
-              declare: "住建局-信息中心",
-              time: "2021-08-10",
-              resType: i,
-            };
-            list.push(obj);
-          }
-          setTimeout(() => resolve({ list, total: list.length }), 1000);
-    });
-}
-const processKey=Object.freeze({
-        1: "待修改",
-        2: "待材料审核",
-        3: "待评审",
-        4: "待发起评审会",
-        5: "待评分",
-        6: "待确认评分",
-        7: "待方案备案",
-        8: "待传评审结论",
-        9: "不予立项",
-        10: "待预算备案",
-        11: "待采购备案",
-        12: "立项采购完成",
+import {columnsItem,stateType,columns,getData} from "./type"
+const props= withDefaults(defineProps<{
+      selection?:boolean,//是否展示序号
+      columns?:columnsItem[],//表头配置
+      getData?:Function,//通过函数获取数据
+      parameter?:object,//请求额外参数
+      pagination?:boolean,//是否展示分页
+      edit?:boolean//是否展示编辑
+      stripe?:boolean//是否为斑马纹 table	
+      border?:boolean//是否带有纵向边框	
+}>(),{
+  columns(){
+    return columns
+  },
+  getData,
+  pagination:true,
+  selection:true,
+  edit:false,
+  stripe:false,
+  border:false,
+  parameter(){
+      return {}
+    }
 })
+const search=()=>{}
+const resize=()=>{}
+
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .my-table-page {
-  
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  font-weight: normal;
+  .box-card {
+      width: 100%;
+      border-radius: 3px;
+      box-shadow: 0 2px 6px 0 rgb(0 0 0 / 10%);
+      padding: 10px;
+      color: #747070;
+  }
+    .seach {
+    // margin-top: 20px;
+    width: 100%;
+    display: flex;
+    // flex: 4;
+    justify-content: space-between;
+  }
 }
 </style>

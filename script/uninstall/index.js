@@ -15,10 +15,6 @@ const getDir = (path) => {
   const stat = fs.readdirSync(path);
   return stat.filter((item) => item.indexOf('.') === -1)
 }
-
-console.log()
-
-
 inquirer.prompt([{
   type: 'list',
   name: 'key',
