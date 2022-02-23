@@ -49,13 +49,14 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive,onMounted,toRefs} from "vue"
+import {reactive,onMounted,toRefs, watch} from "vue"
 import {columnsItem,stateType,columns,getData} from "./type"
 const props= withDefaults(defineProps<{
       selection?:boolean,//是否展示序号
+      mode:string,//data||request
       columns?:columnsItem[],//表头配置
       getData?:Function,//通过函数获取数据
-      tableData?:any[],
+      tableData:any[],
       parameter?:object,//请求额外参数
       pagination?:boolean,//是否展示分页
       edit?:boolean//是否展示编辑
@@ -73,6 +74,7 @@ const props= withDefaults(defineProps<{
   stripe:false,
   border:false,
   resKey:'list',
+  mode:"data",
   parameter(){
       return {}
     }
@@ -101,7 +103,7 @@ const getList=(parameter = props.parameter)=> {
           });
     }
 const handleSizeChange=(val:number)=> {
-      if(props.tableData){
+      if(props.mode=='data'){
         emit('size-change',val)
       }else{
         state.searchParameters.pageSize = val;
@@ -110,7 +112,7 @@ const handleSizeChange=(val:number)=> {
       }
     }
 const handleCurrentChange=(val:number)=> {
-    if(props.tableData){
+    if(props.mode=='data'){
         emit('current-change',val)
       }else{
         state.searchParameters.pageNo = val;
@@ -118,8 +120,16 @@ const handleCurrentChange=(val:number)=> {
       }
     }
 
+
 onMounted(()=>{
-    props.tableData?state.tableData = props.tableData:getList(props.parameter)
+  if(props.mode=='data'){
+      state.tableData = props.tableData     
+  }else{
+    getList(props.parameter)
+  }
+  watch(()=>props.tableData,(a)=>{
+    state.tableData = a 
+  })
 })
 //导出属性到页面中使用
 const { loading, tableData,searchParameters,total} = toRefs(state)

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <my-table :columns="columns" :getData="getData" :edit="true">
+    <my-table :columns="columns" mode="data" :edit="true" :tableData="data">
+    </my-table>
+    <my-table :columns="columns" mode="request" :getData="getData" :edit="true">
       <template #resType="{row:{resType}}">
           {{processKey[resType]}}
       </template>
@@ -11,8 +13,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-
-
+import {ref,onMounted} from "vue"
+const data=ref([])
 const columns=[
           {
             prop: "resName",
@@ -53,6 +55,12 @@ const getData=(parameter:{pageSize:number,pageNo:number})=>{
           setTimeout(() => resolve({ list, total: list.length*10 }), 1000);
     });
 }
+onMounted(() => {
+  getData({pageSize:10,pageNo:1}).then(res=>{
+      data.value=(res as any).list
+      console.log(data.value)
+  })
+})
 const processKey=Object.freeze({
         1: "待修改",
         2: "待材料审核",
