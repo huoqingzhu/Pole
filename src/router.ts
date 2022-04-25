@@ -28,6 +28,11 @@
     name: 'TablePage',
     path: '/components/TablePage',
     component: () => import('packages/TablePage/docs/README.md'),
+  },{
+    title: '导航菜单',
+    name: 'Menu',
+    path: '/components/Menu',
+    component: () => import('packages/Menu/docs/README.md'),
   }];
  
  const routerConfig = {

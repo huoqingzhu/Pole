@@ -38,6 +38,9 @@
   .el-menu{
     height:100%;
   }
+    :deep(.el-menu){
+        border-right:solid 10px #fff;
+      }
   .sidebar{
     height:100%;
     >.title{
@@ -46,7 +49,9 @@
       justify-content:center;
       align-items: center;
       font-size: 17px;
-      border-right: 1px solid #fff;
+      background: #FFFFFF;
+      // border-right: 1px solid #fff;
+        -webkit-box-shadow: 0 0px 4px rgb(0 21 41 / 8%);
       font-weight: 600;
       >.logo{
         width: 30px;
@@ -56,12 +61,16 @@
     }
 
     .my-menu{
+    
       
     :deep(.el-menu-item){
-        height: 40px;
-        line-height: 40px;
+        height: 45px;
+        line-height: 45px;
         &.is-active {
-          background-color: rgba(255, 255, 255, 0.3);
+              background:linear-gradient(98deg, #4290FF 0%, #5DB5FF 72%, #84CEFF 100%);
+              box-shadow: 0px 2px 6px 0px rgba(126, 163, 226, 0.6);
+              border-radius: 4px;
+
         }
     }
     :deep(.el-sub-menu){

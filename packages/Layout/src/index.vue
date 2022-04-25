@@ -43,16 +43,16 @@ const props= withDefaults(defineProps<{
 }>(),{
   themeColor(){
     return {
-      menuText: "#fff",
+      menuText: "#BCC1CB",
       menuActiveText:"#fff",
       subMenuActiveText: '#f4f4f5',
-      menuBg:'#3f8cff',
+      menuBg:'#fff',
       menuHover: '#263445',
       subMenuBg: '#1f2d3d',
       subMenuHover: '#001528',
       sideBarWidth: '210px',
-      navbarBg:'#3f8cff',
-      navbarText:'#fff'
+      navbarBg:'#fff',
+      navbarText:'#BCC1CB'
     }
   },
   fold:true,

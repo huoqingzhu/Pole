@@ -17,4 +17,8 @@ export default defineConfig({
     }),
     Markdown(),
   ],
+  server:{
+    port:6868,//启动端口
+    open: true,  
+  },
 });

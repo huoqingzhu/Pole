@@ -39,8 +39,8 @@
 }
 .el-sub-menu{
     .el-menu-item {
-        height: 40px;
-        line-height: 40px;
+        height: 45px;
+        line-height: 45px;
     }
 }
 </style>

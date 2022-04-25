@@ -11,6 +11,7 @@ import { LayoutPlugin } from './Layout';
 import { PasswordBoxPlugin } from './PasswordBox';
 import { TablePlugin } from './Table';
 import { TablePagePlugin } from './TablePage';
+import { MenuPlugin } from './Menu';
 
 const MYKitPlugin: Plugin = {
   install(app: App) {
@@ -18,6 +19,7 @@ const MYKitPlugin: Plugin = {
     PasswordBoxPlugin.install?.(app);
     TablePlugin.install?.(app);
     TablePagePlugin.install?.(app);
+    MenuPlugin.install?.(app);
   },
 };
 
@@ -27,3 +29,4 @@ export * from './Layout'
 export * from './PasswordBox'
 export * from './Table'
 export * from './TablePage'
+export * from './Menu'

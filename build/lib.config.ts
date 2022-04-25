@@ -2,7 +2,7 @@ import baseConfig from './base.config';
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
-
+console.log("123")
 export default defineConfig({
   ...baseConfig,
   build: {
@@ -23,8 +23,9 @@ export default defineConfig({
       }
     }
   },
+
   plugins: [
     ...(baseConfig as any).plugins,
     dts(),
-  ]
+  ],
 });
