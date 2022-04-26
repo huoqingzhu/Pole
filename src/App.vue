@@ -16,7 +16,7 @@ import { reactive } from 'vue'
 const data = reactive({
   links: ComponentList.map(item => ({
     path: `/components/${item.compName}`,
-    name: item.compZhName
+    name:`${item.compName}` 
   }))
 })
 </script>
