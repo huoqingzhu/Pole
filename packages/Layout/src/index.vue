@@ -6,7 +6,18 @@
       class="drawer-bg"
       @click="handleClickOutside"
     ></div>
-    <transition name="slide-fade" v-if="state.device" >
+      <Navbar navbarBg="#3f8cff" :Fold="Fold"   >
+        <template #logo>
+            <img src="./logo.png" alt="">
+        </template>
+        <template #title>
+            {{title}}
+        </template>
+        <slot name="user"></slot>
+    </Navbar>
+    <div :class="className">
+  
+      <transition name="slide-fade" v-if="state.device" >
       <Sidebar 
         v-show="state.show"
         @select="select"
@@ -16,10 +27,6 @@
       v-else
       @select="select"
       :class="[state.device?'sidebar-container':'']"  />
-    <div :class="className">
-      <Navbar navbarBg="#3f8cff" :Fold="Fold"   >
-        <slot name="user"></slot>
-      </Navbar>
       <div class="content" >
         <slot></slot>
       </div>
@@ -28,11 +35,10 @@
 </template>
 <script lang="ts" setup>
 import Sidebar from "./component/Sidebar/index.vue"
-import {appType,device,propsType,themeColor} from "./type"
+import {appType,device,themeColor} from "./type"
 import Navbar from "./component/Navbar/index.vue"
 import {Fold} from "@element-plus/icons-vue"
 import { reactive,provide, onMounted,onUnmounted,computed,ref} from "vue"
-
 const props= withDefaults(defineProps<{
   themeColor:themeColor,
   list:any[],
@@ -56,7 +62,7 @@ const props= withDefaults(defineProps<{
     }
   },
   fold:true,
-  foldWith:800,
+  foldWith:200,
   title:"这是一个标题",
   list(){
     return []
@@ -65,7 +71,7 @@ const props= withDefaults(defineProps<{
 
 const state:appType = reactive({
   device:device.desktop,//是否为手机
-  isCollapse: false,//false是否关闭  ，false 为展开的意思
+  isCollapse: true,//false是否关闭  ，false 为展开的意思
   show:true,//侧边栏是否隐藏
 })
 const layout=ref<HTMLElement>()
@@ -74,7 +80,8 @@ const select=(index:string,param2:string[],)=>{
   emit('select',index,param2)
 }
 const className=computed(()=>{
-    return state.device===device.move?['moveMain']:state.isCollapse?['sideMain']:['main']
+    // return state.device===device.move?['moveMain']:state.isCollapse?['sideMain']:['main']
+    return ['main']
 })
 const fold=props.fold
 const detection=()=>{
@@ -121,26 +128,27 @@ const changeCollapse=()=>{
 .my-layout{
   width: 100%;
   height: 100%;
-  display: flex;
+  // display: flex;
   overflow: hidden;
   overflow-x: auto;
   position: relative;
 
 .main{
-  width: calc(100% - 250px);
+  width: 100%;
+  display: flex;
   // transition:width 1s;
 }
 .sideMain{
-  width: calc(100% - 64px);
+  width: 100%;
 }
 .moveMain{
   width: 100%;
 }
 .content{
   padding: 40px;
-  width: 100%;
-  height: calc(100% - 50px);
+  flex: 1;
   box-sizing: border-box;
+  background: #f7faff;
 }
 }
 .drawer-bg {

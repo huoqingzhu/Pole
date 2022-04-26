@@ -10,7 +10,7 @@
       :default-active="activeIndex"
       
       >
-      <m-menu-item key="0" >
+      <m-menu-item index="0" >
         <template #icon>
         <el-icon :size="18" >
           <Bell />
@@ -18,7 +18,7 @@
         </template>
         <span>Option0</span>
       </m-menu-item>
-      <m-menu-item key="1">
+      <m-menu-item index="1">
         <template #icon>
         <el-icon :size="18" >
           <edit />
@@ -34,10 +34,10 @@
         </el-icon>
         </template>
         <template #title> One  </template>
-        <m-menu-item key="5">Option 5</m-menu-item>
-        <m-menu-item key="6">Option 6</m-menu-item>
-        <m-menu-item key="7">Option 7</m-menu-item>
-        <m-menu-item key="8">Option 8</m-menu-item>
+        <m-menu-item index="5">Option 5</m-menu-item>
+        <m-menu-item index="6">Option 6</m-menu-item>
+        <m-menu-item index="7">Option 7</m-menu-item>
+        <m-menu-item index="8">Option 8</m-menu-item>
       </m-sub-menu>
       <m-sub-menu key="sub2" >
         <template #icon>
@@ -46,21 +46,21 @@
         </el-icon>
         </template>
         <template #title> two  </template>
-        <m-menu-item key="15">Option 5</m-menu-item>
-        <m-menu-item key="16">Option 6</m-menu-item>
-        <m-menu-item key="17">Option 7</m-menu-item>
-        <m-menu-item key="18">Option 8</m-menu-item>
-        <m-sub-menu key="sub3" >
+        <m-menu-item index="15">Option 5</m-menu-item>
+        <m-menu-item index="16">Option 6</m-menu-item>
+        <m-menu-item index="17">Option 7</m-menu-item>
+        <m-menu-item index="18">Option 8</m-menu-item>
+        <m-sub-menu index="sub3" >
         <template #icon>
             <el-icon :size="18" >
                 <Football />
             </el-icon>
             </template>
             <template #title> three  </template>
-            <m-menu-item key="25" :disabled="true">Option 5</m-menu-item>
-            <m-menu-item key="26">Option 6</m-menu-item>
-            <m-menu-item key="27">Option 7</m-menu-item>
-            <m-menu-item key="28">Option 8</m-menu-item>
+            <m-menu-item index="25" :disabled="true">Option 5</m-menu-item>
+            <m-menu-item index="26">Option 6</m-menu-item>
+            <m-menu-item index="27">Option 7</m-menu-item>
+            <m-menu-item index="28">Option 8</m-menu-item>
         </m-sub-menu>
       </m-sub-menu>
     </m-menu>
@@ -98,7 +98,7 @@ const state=reactive({
   activeIndex:'27'
 })
 
-const select=(key,list) =>{
+const select=(key:string,list:string[]) =>{
   console.log(key,list)
   state.activeIndex=key
   console.log(state.activeIndex)

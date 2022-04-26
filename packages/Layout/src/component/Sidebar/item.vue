@@ -1,28 +1,29 @@
 <template>
-    <template v-for="(item,index) in list" :key="index">
-      <el-sub-menu :index="`${item.path}`" v-if="item.children">
-          <template #title>
+    <template v-for="(item,index) in list" >
+      <m-sub-menu :key="item.path" :index="item.path" v-if="item.children">
+          <template #icon>
           <el-icon :size="16" v-if="item.meta.icon">
               <component :is="item.meta.icon"  />
           </el-icon>
-          <span>
-              {{item.meta.title}}
-            </span>
           </template>
+          <template #title> <span>
+              {{item.meta.title}}
+            </span></template>
           <item-tree :list="item.children||[]" />
-      </el-sub-menu>
-      <el-menu-item v-else :index="`${item.path}`" >
-        <el-icon :size="16" >
+      </m-sub-menu>
+      <m-menu-item v-else :keys="item.path" :index="item.path">
+        <template #icon>
+            <el-icon :size="16" >
             <component :is="item.meta.icon" v-if="item.meta.icon" />
         </el-icon>
-          <template #title>
-            <span  >{{item.meta.title}}</span>
           </template>
-      </el-menu-item>
+          <span  >{{item.meta.title}}</span>
+      </m-menu-item>
     </template>
 </template>
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
+
   export default defineComponent({
     name:"itemTree",
     props:{

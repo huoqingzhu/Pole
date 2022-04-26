@@ -4,9 +4,8 @@
     </div>
 </template>
 <script lang="ts" setup>
-import {computed,provide,reactive,unref} from "vue"
+import {computed,reactive,unref} from "vue"
 import {MenuState,useProvideMenu,ItemInfo,SubInfo,MenuMode,Key,} from "./key"
-import type {  InjectionKey,ComputedRef,Ref,} from 'vue';
 
 
  // Props
@@ -43,6 +42,7 @@ const style=computed(()=>{
 })
 // 方法
 const onItemClick=(value:ItemInfo)=>{
+    console.log(value)
     state.isActiveKey=value.key
     state.keyList=value.keyPath
     emit('select',value.key,unref(value.keyPath))

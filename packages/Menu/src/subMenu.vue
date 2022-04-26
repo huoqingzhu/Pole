@@ -7,16 +7,16 @@
             <slot name="title"></slot>
         </span>
         <span class="edit center" v-show="collapse">
-            <el-icon :size="18"  color="#333" v-if="!disabled&&store.collapse">
+            <el-icon :size="14"  color="#333" v-if="!disabled&&store.collapse">
                 <ArrowDownBold v-if="isUp" />
                 <ArrowUpBold  v-else />
             </el-icon>
-            <el-icon :size="18"  color="#333" v-if="!store.collapse">
+            <el-icon :size="14"  color="#333" v-if="!store.collapse">
                 <ArrowLeftBold v-if="show" />
                 <ArrowRightBold  v-else />
             </el-icon>
         </span>
-        <div class="xuanfu" v-if="show&&!store.collapse&&!disabled">
+        <div class="xuanfu" v-show="show&&!store.collapse&&!disabled">
             <div class="count">
                 <slot></slot>
             </div>
@@ -28,13 +28,13 @@
 <script lang="ts" setup>
 import {ref,computed,getCurrentInstance,onBeforeUnmount} from "vue"
 import {ArrowUpBold,ArrowDownBold,ArrowLeftBold,ArrowRightBold} from "@element-plus/icons-vue"
-import {useInjectMenu,SubInfo} from "./key"
+import {useInjectMenu,SubInfo,Key} from "./key"
 import useProvideKeyPath, { useInjectKeyPath ,IndexGuid} from './keyPath';
-
 // Props
 interface Props{
     disabled?:boolean,
     isActive?:string
+    index:Key
 }
 const props= withDefaults(defineProps<Props>(),{
     disabled:false,
@@ -47,7 +47,6 @@ const { parentEventKeys, parentInfo, parentKeys } = useInjectKeyPath();
 const isUp=ref(false)
 const show=ref(false)
 const childrenEventKeys = ref([]);
-
 const getInfo=():SubInfo=>{
     return {
         key:key,
@@ -58,10 +57,10 @@ const getInfo=():SubInfo=>{
     } 
 }
 // key
-    const instance = getCurrentInstance();
-    console.log(instance)
-    const key =typeof instance?.vnode.key === 'symbol' ? String(instance.vnode.key) : instance?.vnode.key??''
-    const eventKey =`sub_menu_${IndexGuid()}_$$_${key}`
+    // const instance = getCurrentInstance();
+    const index= IndexGuid()
+    const key =props.index??index
+    const eventKey =`menu_item_${index}_$$_${key}`
     parentInfo.childrenEventKeys?.value.push(eventKey);
     onBeforeUnmount(() => {
         if (parentInfo.childrenEventKeys) {
@@ -80,11 +79,9 @@ const subClick=()=>{
 }
 const mouseover=()=>{
     show.value=true
-    console.log("进入")
 }
 const mouseout=()=>{
     show.value=false
-    console.log("移开")
 }
 const collapse=computed(()=>{
     if(parentEventKeys.value.length>0){
@@ -95,6 +92,7 @@ const collapse=computed(()=>{
 })
 //computed
 const className=computed(()=>{
+    console.log()
         return [
             'menu-sub',
             'center',
@@ -140,6 +138,7 @@ useProvideKeyPath(eventKey,key as string,menuInfo)
     // padding-left: 24px;
     position: relative;
     z-index: 1;
+    margin-bottom: 8px;
     .edit{
         position: absolute;
         right:10px;

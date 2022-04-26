@@ -16,12 +16,13 @@
 </template>
 <script lang="ts" setup>
 import {ref,computed,getCurrentInstance,inject} from "vue"
-import {useInjectMenu,ItemInfo} from "./key"
+import {useInjectMenu,ItemInfo,Key} from "./key"
 import useProvideKeyPath, { useInjectKeyPath ,IndexGuid} from './keyPath';
 // Props
 interface Props{
     disabled?:boolean,
     isActive?:string
+    index:Key
 }
 const props= withDefaults(defineProps<Props>(),{
     disabled:false,
@@ -32,11 +33,11 @@ const {store,onItemClick}=useInjectMenu()
 const isUp=ref(true)
 // key
 const instance = getCurrentInstance();
-const key =typeof instance?.vnode.key === 'symbol' ? String(instance.vnode.key) : instance?.vnode.key??'';
-
-const eventKey =`menu_item_${IndexGuid()}_$$_${key}`
-const { parentEventKeys, parentKeys,parentInfo } = useInjectKeyPath();
-// console.log(key,parentEventKeys.value, parentKeys.value )
+console.log(instance?.vnode)
+const index= IndexGuid()
+const key =props.index??index
+const eventKey =`menu_item_${index}_$$_${key}`
+const { parentEventKeys, parentKeys } = useInjectKeyPath();
     const keysPath = computed(() => {
         return [...parentKeys.value, key];
     });
@@ -69,13 +70,16 @@ const collapse=computed(()=>{
         return store.collapse
     }
 })
-const className=computed(()=>{
+const className=computed(()=>{ 
+    const isActive=store.isActiveKey==key
+    const keysPathLength=keysPath.value.length
         return [
             'menu-item',
             'center',
             collapse.value ? '':'collapse',
             props.disabled ? 'disabled' : '',
-            store.isActiveKey==key?"isActive":''
+            (isActive&&store.collapse)||(keysPathLength==1&&isActive)?"isActive":'',
+            isActive&&keysPathLength>1&&!store.collapse?"isActive-collapse":''
         ]
 })
 
@@ -99,6 +103,7 @@ const className=computed(()=>{
     width: 100%;
     height: 44px;
     // padding-left: 24px;
+    margin-bottom: 8px;
 
     .icon{
         margin-right: 8px;
@@ -110,18 +115,24 @@ const className=computed(()=>{
     color: #333;
     }
 }
-.isActive {
-    background: linear-gradient(98deg, #4290ff 0%, #5db5ff 72%, #84ceff 100%);
-    box-shadow: 0px 2px 6px 0px rgba(126, 163, 226, 0.6);
-    border-radius: 4px;
-    color: #fff;
-    &:hover {
-    background: linear-gradient(98deg, #4290ff 0%, #5db5ff 72%, #84ceff 100%);
-    box-shadow: 0px 2px 6px 0px rgba(126, 163, 226, 0.6);
-    border-radius: 4px;
-    color: #fff;
-}
-}
+    .isActive {
+        background: linear-gradient(98deg, #4290ff 0%, #5db5ff 72%, #84ceff 100%);
+        box-shadow: 0px 2px 6px 0px rgba(126, 163, 226, 0.6);
+        border-radius: 4px;
+        color: #fff;
+        &:hover {
+            background: linear-gradient(98deg, #4290ff 0%, #5db5ff 72%, #84ceff 100%);
+            box-shadow: 0px 2px 6px 0px rgba(126, 163, 226, 0.6);
+            border-radius: 4px;
+            color: #fff;
+        }
+    }
+    .isActive-collapse{
+            color: #4290ff;
+    }
+    .isActive-collapse:hover{
+        color: #4290ff;
+    }
 .disabled:hover {
     color: #bcc1cb;
 }

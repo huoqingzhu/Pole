@@ -1,21 +1,16 @@
 <template>
   <div class="sidebar" >
-      <div class="title" :style="{background:props.themeColor.menuBg,color:props.themeColor.menuText}">
+      <!-- <div class="title" :style="{background:props.themeColor.menuBg,color:props.themeColor.menuText}">
         <img src="./logo.png" alt="图标" class="logo">
         <span v-if="!state.isCollapse" style=" margin-left:10px">{{props.title}}</span>
-      </div>
-      <el-menu
+      </div> -->
+      <m-menu
       :default-active="props.defaultActive" 
       class="my-menu" 
-      :background-color="props.themeColor.menuBg"
-      :text-color="props.themeColor.menuText"
-      :unique-opened="false"
-      :active-text-color="props.themeColor.menuActiveText"
       @select="select"
-      :collapse-transition="false"
       :collapse="state.isCollapse">
       <item-tree :list="props.list" />
-    </el-menu>
+    </m-menu>
   </div>
   
 </template>
@@ -42,7 +37,13 @@
         border-right:solid 10px #fff;
       }
   .sidebar{
-    height:100%;
+    padding: 10px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        #fbfdff 100%
+      );
+      z-index: 2;
     >.title{
       height:50px;
       display: flex;
@@ -50,8 +51,7 @@
       align-items: center;
       font-size: 17px;
       background: #FFFFFF;
-      // border-right: 1px solid #fff;
-        -webkit-box-shadow: 0 0px 4px rgb(0 21 41 / 8%);
+      box-shadow: 0 0px 4px rgb(0 21 41 / 8%);
       font-weight: 600;
       >.logo{
         width: 30px;

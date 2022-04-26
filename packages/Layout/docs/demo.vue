@@ -28,7 +28,7 @@ const list:any[]=[
     ]
   },
 ]
-const activeIndex = ref('/test-1-1')
+const activeIndex = ref('/test2')
 const select=(index:string,param2:string[])=>{
   console.log(index,param2)
 }
