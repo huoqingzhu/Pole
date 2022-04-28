@@ -1,7 +1,7 @@
 <template>
   <div class="navbar m-center" >
       <div class="m-left-title m-center" v-if="!state.device">
-        <span style="width: 58px;text-align: center;"> <slot name="logo"></slot></span>
+        <span style="width: 58px;justify-content:center" class="m-center"> <slot name="logo"></slot></span>
         <span v-if="state.isCollapse" style="min-width: 100px;">{{props.title}}</span>
       </div>
       <div class="m-center">
