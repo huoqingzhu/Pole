@@ -81,7 +81,7 @@ const mouseover=()=>{
     show.value=true
 }
 const mouseout=()=>{
-    // show.value=false
+    show.value=false
 }
 const collapse=computed(()=>{
     if(parentEventKeys.value.length>0){
@@ -159,6 +159,7 @@ useProvideKeyPath(eventKey,key as string,menuInfo)
             z-index: 999;
             padding: 20px 20px;
             width: 184px;
+            box-sizing: content-box;
             .count{
             background: #FFFFFF;
             color:#5e6373;
