@@ -147,7 +147,7 @@ const changeCollapse=()=>{
 .content{
   padding: 40px;
   flex: 1;
-  box-sizing: border-box;
+  // box-sizing: border-box;
   background: #f7faff;
 }
 }

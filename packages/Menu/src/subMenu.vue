@@ -81,7 +81,7 @@ const mouseover=()=>{
     show.value=true
 }
 const mouseout=()=>{
-    show.value=false
+    // show.value=false
 }
 const collapse=computed(()=>{
     if(parentEventKeys.value.length>0){
