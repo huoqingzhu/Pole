@@ -2,7 +2,7 @@
     <template v-for="(item,index) in list" >
       <m-sub-menu :key="item.path" :index="item.path" v-if="item.children">
           <template #icon>
-          <el-icon :size="16" v-if="item.meta.icon">
+          <el-icon :size="18" v-if="item.meta.icon">
               <component :is="item.meta.icon"  />
           </el-icon>
           </template>
@@ -13,7 +13,7 @@
       </m-sub-menu>
       <m-menu-item v-else :keys="item.path" :index="item.path">
         <template #icon>
-            <el-icon :size="16" >
+            <el-icon :size="18" >
             <component :is="item.meta.icon" v-if="item.meta.icon" />
         </el-icon>
           </template>

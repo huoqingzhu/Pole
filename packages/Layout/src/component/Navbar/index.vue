@@ -1,11 +1,11 @@
 <template>
-  <div class="navbar m-center" :style="{backgroundColor:themeColor.navbarBg,color:themeColor.menuText}">
-      <div class="m-left-title m-center">
+  <div class="navbar m-center" >
+      <div class="m-left-title m-center" v-if="!state.device">
         <span style="width: 58px;text-align: center;padding: 10px;"> <slot name="logo"></slot></span>
-        <span v-if="state.isCollapse" style="min-width: 100px;"><slot name="title"></slot></span>
+        <span v-if="state.isCollapse" style="min-width: 100px;">{{props.title}}</span>
       </div>
       <div class="m-center">
-        <el-icon :size="24" :color="themeColor.menuText" v-if="props.fold" style="margin-left: 10px;">
+        <el-icon :size="24"   style="margin-left: 10px;">
           <Expand v-if="!state.isCollapse" @click="changeCollapse(false)" /> 
           <Fold v-else @click="changeCollapse(true)" />
         </el-icon>
@@ -20,10 +20,10 @@ import {Fold,Expand} from "@element-plus/icons-vue"
 import {inject} from "vue"
 import {appType,propsType} from "../../type"
 
-const themeColor:any =inject('themeColor')
 const state:appType =<appType>inject('state')
-const props=<propsType>inject('props')
 const changeCollapse=<Function>inject('changeCollapse')
+const props=<propsType>inject('props')
+
 
 </script>
 <style lang="scss" scoped>

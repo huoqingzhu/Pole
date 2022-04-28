@@ -150,7 +150,7 @@ useProvideKeyPath(eventKey,key as string,menuInfo)
     }
     .iconFF{
         margin-right: 8px;
-        margin-left: 12px;
+        margin-left: 8px;
     }
     .xuanfu{
             position: absolute;

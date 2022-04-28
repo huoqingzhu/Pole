@@ -1,3 +1,5 @@
+
+import type {  InjectionKey,ComputedRef} from 'vue';
 export interface appType{
   device:device,
   isCollapse:boolean,

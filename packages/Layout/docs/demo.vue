@@ -31,6 +31,7 @@ const list:any[]=[
 const activeIndex = ref('/test2')
 const select=(index:string,param2:string[])=>{
   console.log(index,param2)
+  activeIndex.value=index
 }
 const getTitle=()=>{
 

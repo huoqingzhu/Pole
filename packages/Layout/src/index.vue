@@ -8,61 +8,51 @@
     ></div>
       <Navbar navbarBg="#3f8cff" :Fold="Fold"   >
         <template #logo>
-            <img src="./logo.png" alt="">
-        </template>
-        <template #title>
-            {{title}}
+            <slot name="logo">
+              <img src="./logo.png" alt="">
+            </slot> 
         </template>
         <slot name="user"></slot>
     </Navbar>
-    <div :class="className">
-  
+    <div class="main">
       <transition name="slide-fade" v-if="state.device" >
+        <Sidebar 
+            v-show="state.show"
+            @select="select"
+            :class="[state.device?'sidebar-container':'']"  >
+                <template #logo>
+                    <slot name="logo">
+                      <img src="./logo.png" alt="">
+                    </slot> 
+                </template>
+            </Sidebar>
+      </transition>
       <Sidebar 
-        v-show="state.show"
+        v-else
         @select="select"
-        :class="[state.device?'sidebar-container':'']"  />
-    </transition>
-    <Sidebar 
-      v-else
-      @select="select"
-      :class="[state.device?'sidebar-container':'']"  />
-      <div class="content" >
-        <slot></slot>
+        :class="[state.device?'sidebar-container':'']"  
+        />
+        <div class="content" >
+          <slot></slot>
+        </div>
       </div>
-    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import Sidebar from "./component/Sidebar/index.vue"
-import {appType,device,themeColor} from "./type"
+import {appType,device} from "./type"
 import Navbar from "./component/Navbar/index.vue"
 import {Fold} from "@element-plus/icons-vue"
 import { reactive,provide, onMounted,onUnmounted,computed,ref} from "vue"
 const props= withDefaults(defineProps<{
-  themeColor:themeColor,
   list:any[],
   fold?:boolean,//是否开启折叠功能
   foldWith?:number,//当宽度低于多少开启折叠
   defaultActive: string,//默认激活菜单的 index	
   title:string//标题
 }>(),{
-  themeColor(){
-    return {
-      menuText: "#BCC1CB",
-      menuActiveText:"#fff",
-      subMenuActiveText: '#f4f4f5',
-      menuBg:'#fff',
-      menuHover: '#263445',
-      subMenuBg: '#1f2d3d',
-      subMenuHover: '#001528',
-      sideBarWidth: '210px',
-      navbarBg:'#fff',
-      navbarText:'#BCC1CB'
-    }
-  },
   fold:true,
-  foldWith:200,
+  foldWith:600,
   title:"这是一个标题",
   list(){
     return []
@@ -77,19 +67,18 @@ const state:appType = reactive({
 const layout=ref<HTMLElement>()
 const emit = defineEmits(['select'])
 const select=(index:string,param2:string[],)=>{
+  if(state.device){
+    state.show=false;
+  }
   emit('select',index,param2)
 }
-const className=computed(()=>{
-    // return state.device===device.move?['moveMain']:state.isCollapse?['sideMain']:['main']
-    return ['main']
-})
 const fold=props.fold
 const detection=()=>{
       const offsetWidth=layout!.value!.offsetWidth
       if( offsetWidth< props.foldWith){
         state.device=device.move
         state.show=false
-        state.isCollapse=false;
+        state.isCollapse=true;
       }else{
         state.device = device.desktop
         state.show=true
@@ -116,10 +105,8 @@ const changeCollapse=()=>{
         state.isCollapse=!state.isCollapse;
       }
   }
-  provide('themeColor',props.themeColor)
   provide('state',state)
   provide('list',props.list)
-  provide('fold',props.fold)
   provide('defaultActive',props.defaultActive)
   provide('changeCollapse',changeCollapse)
   provide('props',props)
@@ -135,8 +122,8 @@ const changeCollapse=()=>{
 
 .main{
   width: 100%;
+  height: calc(100% - 50px);
   display: flex;
-  // transition:width 1s;
 }
 .sideMain{
   width: 100%;
@@ -146,6 +133,7 @@ const changeCollapse=()=>{
 }
 .content{
   padding: 40px;
+  height: 100%;
   flex: 1;
   // box-sizing: border-box;
   background: #f7faff;
@@ -174,7 +162,6 @@ const changeCollapse=()=>{
   // opacity: 0;
 }
 .sidebar-container {
-  width: 250px;
   height: 100%;
   position: absolute;
   font-size: 0px;
@@ -183,5 +170,7 @@ const changeCollapse=()=>{
   left: 0;
   z-index: 1001;
   overflow: hidden;
+  padding: 10px;
+  background: #F7FAFF;
 }
 </style>
