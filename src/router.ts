@@ -14,20 +14,10 @@
     path: '/components/Layout',
     component: () => import('packages/Layout/docs/README.md'),
   },{
-    title: '密码框',
-    name: 'PasswordBox',
-    path: '/components/PasswordBox',
-    component: () => import('packages/PasswordBox/docs/README.md'),
-  },{
     title: '表格',
     name: 'Table',
     path: '/components/Table',
     component: () => import('packages/Table/docs/README.md'),
-  },{
-    title: '表格页',
-    name: 'TablePage',
-    path: '/components/TablePage',
-    component: () => import('packages/TablePage/docs/README.md'),
   },{
     title: '导航菜单',
     name: 'Menu',
