@@ -1,7 +1,7 @@
 <template>
   <div class="navbar m-center" >
       <div class="m-left-title m-center" v-if="!state.device">
-        <span style="width: 58px;text-align: center;padding: 10px;"> <slot name="logo"></slot></span>
+        <span style="width: 58px;text-align: center;"> <slot name="logo"></slot></span>
         <span v-if="state.isCollapse" style="min-width: 100px;">{{props.title}}</span>
       </div>
       <div class="m-center">
@@ -55,9 +55,10 @@ const props=<propsType>inject('props')
     }
   }
     .m-left-title {
-    min-width: 68px;
+    // min-width: 78px;
     // margin-right: 15px;
     display: flex;
+    padding:10px;
     align-items: center;
     justify-content: center;
     color: #000;
