@@ -12,4 +12,6 @@ export const MenuPlugin: Plugin = {
 
 export {
   Menu,
+  MenuItem,
+  SubMenu
 };

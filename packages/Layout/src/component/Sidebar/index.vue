@@ -18,10 +18,12 @@
     import ItemTree from './item.vue'
     import {inject} from "vue"
     import {appType,propsType} from "../../type"
+    import {Menu as MMenu} from "../../../../Menu/index"
     const state:appType=<appType>inject('state')
     const props=<propsType>inject('props')
+    type key=string|number
     const emit = defineEmits(['select'])
-    const select=(index:string,param2:string[],)=>{
+    const select=(index:key,param2:key[],)=>{
         emit('select',index,param2)
     }
 
