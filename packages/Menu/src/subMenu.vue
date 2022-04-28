@@ -1,12 +1,12 @@
 <template>
     <div :class="className" @click="subClick" @mouseenter="mouseover"   @mouseleave="mouseout">
-        <span class="iconFF center">
+        <span class="iconFF m-center">
             <slot name="icon"></slot>
         </span>
         <span class="title"  v-show="collapse">
             <slot name="title"></slot>
         </span>
-        <span class="edit center" v-show="collapse">
+        <span class="edit m-center" v-show="collapse">
             <el-icon :size="14"  color="#333" v-if="!disabled&&store.collapse">
                 <ArrowDownBold v-if="isUp" />
                 <ArrowUpBold  v-else />
@@ -95,7 +95,7 @@ const className=computed(()=>{
     console.log()
         return [
             'menu-sub',
-            'center',
+            'm-center',
             collapse .value? '':'collapse',
             props.disabled ? 'disabled' : '',
             store.keyList.includes(key as string)?"isActive":''
@@ -116,7 +116,7 @@ const menuInfo = {
 useProvideKeyPath(eventKey,key as string,menuInfo)
 </script>
 <style scoped lang="scss" >
-.center{
+.m-center{
     display: flex;
     align-items: center;
 }

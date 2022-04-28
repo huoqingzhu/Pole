@@ -9,7 +9,7 @@
                 <slot  ></slot>
         </template>
         <div :class="className" @click="subClick">
-            <span class="icon center"> <slot name="icon"></slot> {{}}</span>
+            <span class="icon m-center"> <slot name="icon"></slot> {{}}</span>
             <span v-show="collapse"> <slot  ></slot></span>
         </div>
     </el-tooltip>
@@ -75,7 +75,7 @@ const className=computed(()=>{
     const keysPathLength=keysPath.value.length
         return [
             'menu-item',
-            'center',
+            'm-center',
             collapse.value ? '':'collapse',
             props.disabled ? 'disabled' : '',
             (isActive&&store.collapse)||(keysPathLength==1&&isActive)?"isActive":'',
@@ -85,7 +85,7 @@ const className=computed(()=>{
 
 </script>
 <style scoped lang="scss" >
-.center{
+.m-center{
     display: flex;
     align-items: center;
 }

@@ -58,10 +58,6 @@ useProvideMenu({
 })
 </script>
 <style scoped lang="scss">
-.center{
-    display: flex;
-    align-items: center;
-}
 .m-menu{
     font-size: 16px;
     font-weight: 500;
