@@ -26,6 +26,7 @@
   import {MMenuItem,MSubMenu} from "../../../../Menu/index"
   export default defineComponent({
     name:"itemTree",
+    components:{MMenuItem,MSubMenu},
     props:{
       list:{
         type:Array as PropType<any[]>,

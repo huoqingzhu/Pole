@@ -1,10 +1,10 @@
 <template>
-  <div class="navbar center" :style="{backgroundColor:themeColor.navbarBg,color:themeColor.menuText}">
-      <div class="leftTitle center">
+  <div class="navbar m-center" :style="{backgroundColor:themeColor.navbarBg,color:themeColor.menuText}">
+      <div class="m-left-title m-center">
         <span style="width: 58px;text-align: center;padding: 10px;"> <slot name="logo"></slot></span>
         <span v-if="state.isCollapse" style="min-width: 100px;"><slot name="title"></slot></span>
       </div>
-      <div class="center">
+      <div class="m-center">
         <el-icon :size="24" :color="themeColor.menuText" v-if="props.fold" style="margin-left: 10px;">
           <Expand v-if="!state.isCollapse" @click="changeCollapse(false)" /> 
           <Fold v-else @click="changeCollapse(true)" />
@@ -27,7 +27,7 @@ const changeCollapse=<Function>inject('changeCollapse')
 
 </script>
 <style lang="scss" scoped>
-.center{
+.m-center{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,7 +54,7 @@ const changeCollapse=<Function>inject('changeCollapse')
       border-radius: 10px;
     }
   }
-    .leftTitle {
+    .m-left-title {
     min-width: 68px;
     // margin-right: 15px;
     display: flex;
