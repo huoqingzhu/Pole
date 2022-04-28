@@ -23,7 +23,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, PropType } from 'vue';
-
+  import {MMenuItem,MSubMenu} from "../../../../Menu/index"
   export default defineComponent({
     name:"itemTree",
     props:{

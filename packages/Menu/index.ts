@@ -1,17 +1,16 @@
 import { App, Plugin } from 'vue';
-import Menu from './src/index.vue';
-import MenuItem from './src/menuItem.vue'
-import SubMenu from './src/subMenu.vue'
+import MMenu from './src/index.vue';
+import MMenuItem from './src/menuItem.vue'
+import MSubMenu from './src/subMenu.vue'
 export const MenuPlugin: Plugin = {
   install(app: App) {
-    app.component('m-menu', Menu);
-    app.component('m-menu-item', MenuItem)
-    app.component('m-sub-menu',SubMenu)
+    app.component('m-menu', MMenu);
+    app.component('m-menu-item', MMenuItem)
+    app.component('m-sub-menu',MSubMenu)
   },
 };
-
+export default MMenu
 export {
-  Menu,
-  MenuItem,
-  SubMenu
+  MMenuItem,
+  MSubMenu
 };

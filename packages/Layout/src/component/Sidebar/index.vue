@@ -18,7 +18,7 @@
     import ItemTree from './item.vue'
     import {inject} from "vue"
     import {appType,propsType} from "../../type"
-    import {Menu as MMenu} from "../../../../Menu/index"
+    import MMenu from "../../../../Menu/index"
     const state:appType=<appType>inject('state')
     const props=<propsType>inject('props')
     type key=string|number
