@@ -7,7 +7,7 @@
           </el-icon>
           </template>
           <template #title> <span>
-              {{item.meta.title}}
+              {{item.meta.title??item.name}}
             </span></template>
           <item-tree :list="item.children||[]" />
       </m-sub-menu>
@@ -17,7 +17,7 @@
             <component :is="item.meta.icon" v-if="item.meta.icon" />
         </el-icon>
           </template>
-          <span  >{{item.meta.title}}</span>
+          <span  >{{item.meta.title??item.name}}</span>
       </m-menu-item>
     </template>
 </template>
